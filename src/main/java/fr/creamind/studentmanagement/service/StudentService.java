@@ -6,7 +6,8 @@ import org.springframework.data.domain.Page;
 
 
 public interface StudentService {
- Page<Student> getAllStudents(int page, int size);
+// Page<Student> getAllStudents(int page, int size);
+ Page<Student> getStudentsWithNomContains(String kw,int page, int size);
  Student saveStudent(Student student);
  Student getStudentById(Long id);
  Student updateStudent(Student student);

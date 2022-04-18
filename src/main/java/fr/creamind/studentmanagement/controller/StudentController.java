@@ -20,11 +20,16 @@ public class StudentController {
     @GetMapping("/students")
     public String listStudents(Model model,
                                @RequestParam(name = "page",defaultValue = "0") int page,
-                               @RequestParam(name = "size" , defaultValue = "10") int size){
-        Page<Student> pageStudents = studentService.getAllStudents(page,size);
+                               @RequestParam(name = "size" , defaultValue = "10") int size,
+                               @RequestParam(name = "keyword" , defaultValue = "") String keyword
+    )
+    {
+//        Page<Student> pageStudents = studentService.getAllStudents(page,size);
+        Page<Student> pageStudents = studentService.getStudentsWithNomContains(keyword,page,size);
         model.addAttribute("students",pageStudents.getContent());
         model.addAttribute("pages",new int[pageStudents.getTotalPages()]);
         model.addAttribute("currentPage",page);
+        model.addAttribute("keyword", keyword);
         return "students";
     }
 
@@ -68,10 +73,10 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @GetMapping("/students/delete/{id}")
-    public String deleteStudent(@PathVariable Long id){
+    @GetMapping("/students/delete/{id}/{keyword}/{page}")
+    public String deleteStudent(@PathVariable Long id, @PathVariable String keyword,@PathVariable int page){
         studentService.deleteStudentById(id);
-        return  "redirect:/students";
+        return  "redirect:/students?keyword="+keyword+"&page"+page;
     }
 
 }

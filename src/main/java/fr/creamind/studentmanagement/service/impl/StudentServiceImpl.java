@@ -18,9 +18,14 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
+//    @Override
+//    public Page<Student> getAllStudents(int page, int size) {
+//        return  studentRepository.findAll(PageRequest.of(page,size));
+//    }
+
     @Override
-    public Page<Student> getAllStudents(int page, int size) {
-        return  studentRepository.findAll(PageRequest.of(page,size));
+    public Page<Student> getStudentsWithNomContains(String kw, int page, int size) {
+        return  studentRepository.findByFirstNameContains(kw,PageRequest.of(page,size));
     }
 
     @Override
