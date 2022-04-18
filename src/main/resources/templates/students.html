@@ -21,6 +21,7 @@
             <div class="col-lg-3">
                 <a th:href="@{/students/new}" class="btn btn-primary btn-sm mb-3">Add Student</a>
             </div>
+
         </div>
     </div>
     <table class="table table-striped">
@@ -43,6 +44,16 @@
         </tr>
         </tbody>
     </table>
+    <ul class="nav nav-pills">
+        <li th:each="page,status:${pages}">
+            <a th:class="${status.index == currentPage ?
+             'btn btn-primary ms-1 mb-1' :
+              'btn btn-outline-primary ms-1 mb-1'}"
+               th:text="${status.index}"
+               th:href="@{students(page=${status.index})}"
+            ></a>
+        </li>
+    </ul>
 </div>
 
 

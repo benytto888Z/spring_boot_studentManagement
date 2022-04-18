@@ -3,6 +3,8 @@ package fr.creamind.studentmanagement.service.impl;
 import fr.creamind.studentmanagement.entity.Student;
 import fr.creamind.studentmanagement.repository.StudentRepository;
 import fr.creamind.studentmanagement.service.StudentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public Page<Student> getAllStudents(int page, int size) {
+        return  studentRepository.findAll(PageRequest.of(page,size));
     }
 
     @Override

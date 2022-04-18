@@ -2,6 +2,7 @@ package fr.creamind.studentmanagement.controller;
 
 import fr.creamind.studentmanagement.entity.Student;
 import fr.creamind.studentmanagement.service.StudentService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,13 @@ public class StudentController {
     // handler method to handler list students and return mode and view
 
     @GetMapping("/students")
-    public String listStudents(Model model){
-        model.addAttribute("students",studentService.getAllStudents());
+    public String listStudents(Model model,
+                               @RequestParam(name = "page",defaultValue = "0") int page,
+                               @RequestParam(name = "size" , defaultValue = "10") int size){
+        Page<Student> pageStudents = studentService.getAllStudents(page,size);
+        model.addAttribute("students",pageStudents.getContent());
+        model.addAttribute("pages",new int[pageStudents.getTotalPages()]);
+        model.addAttribute("currentPage",page);
         return "students";
     }
 
